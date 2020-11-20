@@ -27,6 +27,7 @@ pipelines:
           onStart:
             - echo "Executing AWS Ubuntu Ansible playbook..."
           onExecute:
+            - sudo pip install boto3 botocore
             - cd dependencyState/resources/ansibleRepo
             - echo 'Setting environment variables...'
             - export artifactory_version="$int_ansibleEnvVars_artifactory_version"
@@ -69,6 +70,7 @@ pipelines:
           onStart:
             - echo "Executing AWS Centos Ansible playbook..."
           onExecute:
+            - sudo pip install boto3 botocore
             - cd dependencyState/resources/ansibleRepo
             - echo 'Setting environment variables...'
             - export artifactory_version="$int_ansibleEnvVars_artifactory_version"
@@ -111,6 +113,7 @@ pipelines:
           onStart:
             - echo "Executing AWS Debian Ansible playbook..."
           onExecute:
+            - sudo pip install boto3 botocore
             - cd dependencyState/resources/ansibleRepo
             - echo 'Setting environment variables...'
             - export artifactory_version="$int_ansibleEnvVars_artifactory_version"
