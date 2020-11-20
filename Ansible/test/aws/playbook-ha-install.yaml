@@ -27,12 +27,9 @@
     add_host:
       hostname: "{{ AWSDeployment.stack_outputs.BastionInstancePublic }}"
       groups: bastion
-      ansible_user: "ubuntu"
   - name: Add new RT primary to host group
     add_host:
       hostname: "{{ AWSDeployment.stack_outputs.RTPriInstancePrivate }}"
-      ansible_user: "ubuntu"
-      ansible_ssh_common_args: '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -A ubuntu@{{ AWSDeployment.stack_outputs.BastionInstancePublic }} -W %h:%p"'
       artifactory_version: "{{ lookup('env', 'artifactory_version') }}"
       db_url: "jdbc:postgresql://{{ AWSDeployment.stack_outputs.DBInstancePrivate }}:5432/artifactory"
       server_name: "{{ AWSDeployment.stack_outputs.ALBHostName }}"
@@ -46,8 +43,6 @@
   - name: Add RT secondaries to host group
     add_host:
       hostname: "{{ AWSDeployment.stack_outputs.RTSecInstancePrivate }}"
-      ansible_user: "ubuntu"
-      ansible_ssh_common_args: '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -A ubuntu@{{ AWSDeployment.stack_outputs.BastionInstancePublic }} -W %h:%p"'
       artifactory_version: "{{ lookup('env', 'artifactory_version') }}"
       db_url: "jdbc:postgresql://{{ AWSDeployment.stack_outputs.DBInstancePrivate }}:5432/artifactory"
       server_name: "{{ AWSDeployment.stack_outputs.ALBHostName }}"
@@ -58,8 +53,6 @@
   - name: Add xrays to host group
     add_host:
       hostname: "{{ AWSDeployment.stack_outputs.XrayInstancePrivate }}"
-      ansible_user: "ubuntu"
-      ansible_ssh_common_args: '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -A ubuntu@{{ AWSDeployment.stack_outputs.BastionInstancePublic }} -W %h:%p"'
       xray_version: "{{ lookup('env', 'xray_version') }}"
       jfrog_url: "http://{{ AWSDeployment.stack_outputs.ALBHostName }}"
       master_key: "{{ lookup('env', 'master_key') }}"
@@ -74,8 +67,6 @@
   - name: Add DBs to host group
     add_host:
       hostname: "{{ AWSDeployment.stack_outputs.DBInstancePrivate }}"
-      ansible_user: "ubuntu"
-      ansible_ssh_common_args: '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -A ubuntu@{{ AWSDeployment.stack_outputs.BastionInstancePublic }} -W %h:%p"'
       db_users:
         - { db_user: "artifactory", db_password: "Art1fAct0ry" }
         - { db_user: "xray", db_password: "xray" }
