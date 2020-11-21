@@ -38,8 +38,6 @@ pipelines:
             - export master_key="$int_ansibleEnvVars_master_key"
             - export join_key="$int_ansibleEnvVars_join_key"
             - export ssh_public_key_name="$int_ansibleEnvVars_ssh_public_key_name"
-            - export cfn_template="../../infra/aws/lb-rt-xray-ha-ubuntu16.json"
-            - export stack_name="AwsUbuntuAnsible"
             - export AWS_ACCESS_KEY_ID="$int_ansibleEnvVars_AWS_ACCESS_KEY_ID"
             - export AWS_SECRET_KEY="$int_ansibleEnvVars_AWS_SECRET_KEY"
             - printenv
