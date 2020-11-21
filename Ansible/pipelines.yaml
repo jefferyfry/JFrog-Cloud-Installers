@@ -30,8 +30,6 @@ pipelines:
             - sudo pip install boto3 botocore
             - cd dependencyState/resources/ansibleRepo
             - echo 'Setting environment variables...'
-            - export ansible_user="ubuntu"
-            - export ansible_ssh_common_args = '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -A ubuntu@{{ AWSDeployment.stack_outputs.BastionInstancePublic }} -W %h:%p"'
             - export artifactory_version="$int_ansibleEnvVars_artifactory_version"
             - export xray_version="$int_ansibleEnvVars_xray_version"
             - export artifactory_license1="$int_ansibleEnvVars_artifactory_license1"
@@ -49,7 +47,7 @@ pipelines:
             - ls
             - eval $(ssh-agent -s)
             - ssh-add <(echo "$int_ansiblePrivateKey_key")
-            - ansible-playbook Ansible/test/aws/playbook-ha-install.yaml
+            - ansible-playbook Ansible/test/aws/playbook-ha-install_ubuntu.yaml
           onComplete:
             - echo "AWS Ubuntu Ansible playbook complete."
       - name: execute_aws_centos_ansible_playbook
@@ -75,8 +73,6 @@ pipelines:
             - sudo pip install boto3 botocore
             - cd dependencyState/resources/ansibleRepo
             - echo 'Setting environment variables...'
-            - export ansible_user="centos"
-            - export ansible_ssh_common_args = '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -A centos@{{ AWSDeployment.stack_outputs.BastionInstancePublic }} -W %h:%p"'
             - export artifactory_version="$int_ansibleEnvVars_artifactory_version"
             - export xray_version="$int_ansibleEnvVars_xray_version"
             - export artifactory_license1="$int_ansibleEnvVars_artifactory_license1"
@@ -85,8 +81,6 @@ pipelines:
             - export master_key="$int_ansibleEnvVars_master_key"
             - export join_key="$int_ansibleEnvVars_join_key"
             - export ssh_public_key_name="$int_ansibleEnvVars_ssh_public_key_name"
-            - export cfn_template="../../infra/aws/lb-rt-xray-ha-centos78.json"
-            - export stack_name="AwsCentosAnsible"
             - export AWS_ACCESS_KEY_ID="$int_ansibleEnvVars_AWS_ACCESS_KEY_ID"
             - export AWS_SECRET_KEY="$int_ansibleEnvVars_AWS_SECRET_KEY"
             - printenv
@@ -94,7 +88,7 @@ pipelines:
             - ls
             - eval $(ssh-agent -s)
             - ssh-add <(echo "$int_ansiblePrivateKey_key")
-            - ansible-playbook Ansible/test/aws/playbook-ha-install.yaml
+            - ansible-playbook Ansible/test/aws/playbook-ha-install_centos.yaml
           onComplete:
             - echo "AWS Centos Ansible playbook complete."
       - name: execute_aws_debian_ansible_playbook
@@ -120,8 +114,6 @@ pipelines:
             - sudo pip install boto3 botocore
             - cd dependencyState/resources/ansibleRepo
             - echo 'Setting environment variables...'
-            - export ansible_user="admin"
-            - export ansible_ssh_common_args = '-o ProxyCommand="ssh -o StrictHostKeyChecking=no -A admin@{{ AWSDeployment.stack_outputs.BastionInstancePublic }} -W %h:%p"'
             - export artifactory_version="$int_ansibleEnvVars_artifactory_version"
             - export xray_version="$int_ansibleEnvVars_xray_version"
             - export artifactory_license1="$int_ansibleEnvVars_artifactory_license1"
@@ -130,8 +122,6 @@ pipelines:
             - export master_key="$int_ansibleEnvVars_master_key"
             - export join_key="$int_ansibleEnvVars_join_key"
             - export ssh_public_key_name="$int_ansibleEnvVars_ssh_public_key_name"
-            - export cfn_template="../../infra/aws/lb-rt-xray-ha-debian9.json"
-            - export stack_name="AwsDebianAnsible"
             - export AWS_ACCESS_KEY_ID="$int_ansibleEnvVars_AWS_ACCESS_KEY_ID"
             - export AWS_SECRET_KEY="$int_ansibleEnvVars_AWS_SECRET_KEY"
             - printenv
@@ -139,6 +129,6 @@ pipelines:
             - ls
             - eval $(ssh-agent -s)
             - ssh-add <(echo "$int_ansiblePrivateKey_key")
-            - ansible-playbook Ansible/test/aws/playbook-ha-install.yaml
+            - ansible-playbook Ansible/test/aws/playbook-ha-install_debian.yaml
           onComplete:
             - echo "AWS Debian Ansible playbook complete."

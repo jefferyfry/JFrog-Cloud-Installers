@@ -9,11 +9,11 @@
       msg: "{{ cmd.stdout }}"
   - name: Create AWS test system
     cloudformation:
-        stack_name: "{{ lookup('env', 'stack_name') }}"
+        stack_name: "AwsUbuntuAnsibleUpgrade"
         state: "present"
         region: "us-east-1"
         disable_rollback: true
-        template: "{{ lookup('env', 'cfn_template') }}"
+        template: "../../infra/aws/lb-rt-xray-ha-ubuntu16.json"
         template_parameters:
           SSHKeyName: "{{ lookup('env', 'ssh_public_key_name') }}"
         tags:
