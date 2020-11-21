@@ -17,7 +17,7 @@
         template_parameters:
           SSHKeyName: "{{ lookup('env', 'ssh_public_key_name') }}"
         tags:
-          Stack: "{{ lookup('env', 'stack_name') }}"
+          Stack: "AwsCentosAnsible"
     register: AWSDeployment
   - name: Get AWS deployment details
     debug:
